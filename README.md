@@ -3,10 +3,9 @@
 ## Usage
 
  1. Replace `SHIP.xml` with your actual data source
- 2. Register your data source file in the `Makefile`
- 3. Install dependencies
- 4. Modify XSLT files under `src/`
- 5. Run `scons DS=YOUR_DS` and enjoy!  
+ 2. Install dependencies
+ 3. Modify XSLT files under `src/`
+ 4. Run `scons DS=YOUR_DS` and enjoy!  
     Replace YOUR_DS with the name of your data source name without extension, e.g. `SHIP` for `SHIP.xml`.!
 
 ## Dependencies
