@@ -12,7 +12,7 @@ WEB_DIRNAME=xml
 
 XML_DOWNLOAD_BASE=https://db.bme.hu/r/xml
 
-#SAXON_PATH=/opt/FIXME/saxon9he.jar
+SAXON_PATH=/oracle/saxon9he/saxon9he.jar
 SAXON_DL_URL=https://sourceforge.net/projects/saxon/files/Saxon-HE/9.7/SaxonHE9-7-0-15J.zip/download
 
 if [ -e "${TARGET_DIRNAME}" ]; then
@@ -58,16 +58,22 @@ chmod 700 ${TARGET_DIRNAME}/src
 chmod 705 ${TARGET_DIRNAME}/web
 rm $TEMPFILE
 
-TEMPFILE=$( mktemp -t lab5saxon.XXXXXXXXX )
-wget --no-check-certificate ${SAXON_DL_URL} -O $TEMPFILE
-if [ "$?" != "0" ] ; then
-  echo
-  echo !!! Failed to download files !!!
-  echo
-  exit 1
+# Symlink saxon9he.jar file, if it is there, otherwise download
+if [ -f ${SAXON_PATH} ]; then
+  ln -s ${SAXON_PATH} ${TARGET_DIRNAME}/lib/
+  echo "Saxon XSLT library linked to the lib/ directory."
+else
+  TEMPFILE=$( mktemp -t lab5saxon.XXXXXXXXX )
+  wget --no-check-certificate ${SAXON_DL_URL} -O $TEMPFILE
+  if [ "$?" != "0" ] ; then
+    echo
+    echo !!! Failed to download files !!!
+    echo
+    exit 1
+  fi
+  unzip $TEMPFILE saxon9he.jar -d ${TARGET_DIRNAME}/lib
+  rm $TEMPFILE
 fi
-unzip $TEMPFILE saxon9he.jar -d ${TARGET_DIRNAME}/lib
-rm $TEMPFILE
 
 wget --no-check-certificate ${XML_DOWNLOAD_BASE}/${EXERCISE_CATEGORY_NAME_UC} -O ${TARGET_DIRNAME}/${EXERCISE_CATEGORY_NAME_UC}.xml
 
