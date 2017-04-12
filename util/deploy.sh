@@ -12,7 +12,7 @@ WEB_DIRNAME=xml
 
 XML_DOWNLOAD_BASE=https://db.bme.hu/r/xml
 
-SAXON_PATH=/oracle/saxon9he/saxon9he.jar
+SAXON_PATH=/opt/saxon9he/saxon9he.jar
 SAXON_DL_URL=https://sourceforge.net/projects/saxon/files/Saxon-HE/9.7/SaxonHE9-7-0-15J.zip/download
 
 if [ -e "${TARGET_DIRNAME}" ]; then
