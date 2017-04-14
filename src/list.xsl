@@ -5,7 +5,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   version="2.0">
 
-  <xsl:output method="xml" indent="yes" />
+  <xsl:output method="html" indent="yes" version="5.0" />
 
   <xsl:template match="/">
     <xsl:apply-templates select="ship/ships" />
