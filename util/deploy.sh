@@ -5,6 +5,12 @@ REPOSITORY_NAME=xml-xslt-demo
 BRANCH_NAME=master
 DOWNLOAD_BASE=https://github.com/adatlabor
 
+if [ $INSECURE ]; then
+  echo '/!\ Using insecure mode, be careful what you wish for!'
+  WGET_OPTS=--no-check-certificate
+fi
+
+
 DOWNLOAD_URL=${DOWNLOAD_BASE}/${REPOSITORY_NAME}/archive/${BRANCH_NAME}.zip
 ARCHIVE_DIRNAME=${REPOSITORY_NAME}-${BRANCH_NAME}
 TARGET_DIRNAME=xml
@@ -44,7 +50,7 @@ HERE
 fi
 
 TEMPFILE=$( mktemp -t lab5xml.XXXXXXXXX )
-wget ${DOWNLOAD_URL} -O $TEMPFILE
+wget ${WGET_OPTS} ${DOWNLOAD_URL} -O $TEMPFILE
 if [ "$?" != "0" ] ; then
   echo
   echo !!! Failed to download files !!!
@@ -64,7 +70,7 @@ if [ -f ${SAXON_PATH} ]; then
   echo "Saxon XSLT library linked to the lib/ directory."
 else
   TEMPFILE=$( mktemp -t lab5saxon.XXXXXXXXX )
-  wget --no-check-certificate ${SAXON_DL_URL} -O $TEMPFILE
+  wget ${WGET_OPTS} ${SAXON_DL_URL} -O $TEMPFILE
   if [ "$?" != "0" ] ; then
     echo
     echo !!! Failed to download files !!!
@@ -75,7 +81,7 @@ else
   rm $TEMPFILE
 fi
 
-wget --no-check-certificate ${XML_DOWNLOAD_BASE}/${EXERCISE_CATEGORY_NAME_UC} -O ${TARGET_DIRNAME}/${EXERCISE_CATEGORY_NAME_UC}.xml
+wget ${WGET_OPTS} ${XML_DOWNLOAD_BASE}/${EXERCISE_CATEGORY_NAME_UC} -O ${TARGET_DIRNAME}/${EXERCISE_CATEGORY_NAME_UC}.xml
 
 # Preparing public_html
 chmod 701 ${HOMEDIR}
